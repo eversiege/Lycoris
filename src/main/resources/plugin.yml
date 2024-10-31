@@ -1,0 +1,4 @@
+name: Lycoris
+version: '1.0-SNAPSHOT'
+main: org.momento.lycoris.Lycoris
+api-version: '1.20'
