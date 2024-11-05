@@ -1,10 +1,10 @@
-package org.momento.lycoris.mixins.mixin.classe.structures.infos;
+package org.momento.lycoris.mixins.mixin.classe.structures.constants;
 
 import org.momento.lycoris.mixins.mixin.classe.structures.ConstantPool;
 
 import java.nio.ByteBuffer;
 
-public class LongInfo extends Info {
+public class LongInfo extends ConstantInfo {
 
     private final long bytes;
 

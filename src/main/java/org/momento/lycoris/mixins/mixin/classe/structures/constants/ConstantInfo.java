@@ -1,15 +1,15 @@
-package org.momento.lycoris.mixins.mixin.classe.structures.infos;
+package org.momento.lycoris.mixins.mixin.classe.structures.constants;
 
 import org.momento.lycoris.mixins.mixin.classe.ByteCodec;
 import org.momento.lycoris.mixins.mixin.classe.structures.ConstantPool;
 
 import java.nio.ByteBuffer;
 
-public abstract class Info implements ByteCodec<Info> {
+public abstract class ConstantInfo implements ByteCodec {
 
     private ConstantPool.Tag tag;
 
-    public Info(final ConstantPool.Tag tag) {
+    public ConstantInfo(final ConstantPool.Tag tag) {
         this.tag = tag;
     }
 

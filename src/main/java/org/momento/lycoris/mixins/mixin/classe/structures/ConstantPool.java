@@ -1,11 +1,11 @@
 package org.momento.lycoris.mixins.mixin.classe.structures;
 
 import org.momento.lycoris.mixins.mixin.classe.ByteCodec;
-import org.momento.lycoris.mixins.mixin.classe.structures.infos.*;
+import org.momento.lycoris.mixins.mixin.classe.structures.constants.*;
 
 import java.nio.ByteBuffer;
 
-public class ConstantPool implements ByteCodec<ConstantPool> {
+public class ConstantPool implements ByteCodec {
 
     public enum Tag {
 
@@ -45,42 +45,32 @@ public class ConstantPool implements ByteCodec<ConstantPool> {
     }
 
     private Tag tag;
-    private Info info;
+    private ConstantInfo info;
 
 
-    public ConstantPool(final Tag tag, final Info info) {
+    public ConstantPool(final Tag tag, final ConstantInfo info) {
         this.tag = tag;
         this.info = info;
     }
 
+    public Tag getTag() { return tag; }
+    public ConstantInfo getInfo() { return info; }
+
     public static ConstantPool decode(ByteBuffer buffer) {
         Tag tag = Tag.getTag(buffer.get());
-        Info info = switch (tag) {
-            case Class: yield ClassInfo.decode(buffer);
-            case FieldRef:
-            case MethodRef:
-            case InterfaceMethodRef:
-                yield RefInfo.decode(tag, buffer);
-            case String:
-                yield StringInfo.decode(buffer);
-            case Integer:
-                yield IntegerInfo.decode(buffer);
-            case Float:
-                yield FloatInfo.decode(buffer);
-            case Long:
-                yield LongInfo.decode(buffer);
-            case Double:
-                yield DoubleInfo.decode(buffer);
-            case NameAndType:
-                yield NameTypeInfo.decode(buffer);
-            case UTF8:
-                yield UTF8Info.decode(buffer);
-            case MethodHandle:
-                yield MethodHandleInfo.decode(buffer);
-            case MethodType:
-                yield MethodTypeInfo.decode(buffer);
-            case InvokeDynamic:
-                yield InvokeDynamicInfo.decode(buffer);
+        ConstantInfo info = switch (tag) {
+            case Class -> ClassInfo.decode(buffer);
+            case FieldRef, MethodRef, InterfaceMethodRef -> RefInfo.decode(tag, buffer);
+            case String -> StringInfo.decode(buffer);
+            case Integer -> IntegerInfo.decode(buffer);
+            case Float -> FloatInfo.decode(buffer);
+            case Long -> LongInfo.decode(buffer);
+            case Double -> DoubleInfo.decode(buffer);
+            case NameAndType -> NameTypeInfo.decode(buffer);
+            case UTF8 -> UTF8Info.decode(buffer);
+            case MethodHandle -> MethodHandleInfo.decode(buffer);
+            case MethodType -> MethodTypeInfo.decode(buffer);
+            case InvokeDynamic -> InvokeDynamicInfo.decode(buffer);
         };
         return new ConstantPool(tag, info);
     }
@@ -90,4 +80,5 @@ public class ConstantPool implements ByteCodec<ConstantPool> {
         buffer.put(tag.getValue());
         info.encode(buffer);
     }
+
 }
