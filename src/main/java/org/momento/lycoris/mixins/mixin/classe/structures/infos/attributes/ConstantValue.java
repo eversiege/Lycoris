@@ -2,7 +2,7 @@ package org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes;
 
 import java.nio.ByteBuffer;
 
-public class ConstantValue implements Attribute {
+public class ConstantValue implements SizedByteCodec {
 
     private final char valueIndex;
 
