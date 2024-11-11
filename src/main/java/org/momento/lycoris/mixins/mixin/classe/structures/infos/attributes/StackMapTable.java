@@ -1,7 +1,7 @@
 package org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes;
 
 import org.momento.lycoris.mixins.mixin.classe.ByteCodec;
-import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.frames.StackMapFrame;
+import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.frames.*;
 
 import java.nio.ByteBuffer;
 
@@ -27,13 +27,14 @@ public class StackMapTable implements SizedByteCodec {
         StackMapFrame[] entries = new StackMapFrame[buffer.getChar()];
         for (int i = 0; i < entries.length; ++i) {
             byte frameType = buffer.get();
-            entries[i] = switch (StackMapFrame.Type.fromValue(frameType)) {
-                case SAME -> null;
-                case SAME_LOCAL_1_STACk_ITEM -> null;
-                case SAME_LOCAL_1_STACK_ITEM_EXTENDED -> null;
-                case CHOP -> null;
-                case SAME_FRAME_EXTENDED -> null;
-                case APPEND -> null;
+            StackMapFrame.Type type = StackMapFrame.Type.fromValue(frameType);
+            entries[i] = switch (type) {
+                case SAME -> new SameFrame(type);
+                case SAME_LOCAL_1_STACk_ITEM -> SameLocalStackItemFrame.decode(type, buffer);
+                case SAME_LOCAL_1_STACK_ITEM_EXTENDED -> SameLocalStackItemExtFrame.decode(type, buffer);
+                case CHOP -> ChopFrame.decode(type, buffer);
+                case SAME_FRAME_EXTENDED -> SameExFrame.decode(type, buffer);
+                case APPEND -> AppendFrame.decode(type, buffer);
                 case FULL_FRAME -> null;
             };
         }

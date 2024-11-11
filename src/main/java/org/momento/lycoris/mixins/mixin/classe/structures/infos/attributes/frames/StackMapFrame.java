@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 
 public abstract class StackMapFrame implements SizedByteCodec {
 
-    public static enum Type {
+    public enum Type {
         SAME((byte) 0),
         SAME_LOCAL_1_STACk_ITEM((byte) 64),
         SAME_LOCAL_1_STACK_ITEM_EXTENDED((byte) 247),
@@ -51,6 +51,11 @@ public abstract class StackMapFrame implements SizedByteCodec {
     }
 
     public Type getType() { return type; }
+
+    @Override
+    public int getSize() {
+        return 1;
+    }
 
     @Override
     public void encode(ByteBuffer buffer) {

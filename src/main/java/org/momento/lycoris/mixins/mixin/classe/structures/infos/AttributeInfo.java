@@ -1,10 +1,9 @@
-package org.momento.lycoris.mixins.mixin.classe.structures.infos
+package org.momento.lycoris.mixins.mixin.classe.structures.infos;
 
 import org.momento.lycoris.mixins.mixin.classe.ByteCodec;
 import org.momento.lycoris.mixins.mixin.classe.structures.ConstantPool;
 import org.momento.lycoris.mixins.mixin.classe.structures.constants.ConstantInfo;
 import org.momento.lycoris.mixins.mixin.classe.structures.constants.UTF8Info;
-import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.Attribute;
 import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.Code;
 import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.ConstantValue;
 import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.SizedByteCodec;
