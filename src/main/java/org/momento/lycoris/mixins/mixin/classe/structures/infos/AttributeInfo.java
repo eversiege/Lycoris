@@ -4,10 +4,7 @@ import org.momento.lycoris.mixins.mixin.classe.ByteCodec;
 import org.momento.lycoris.mixins.mixin.classe.structures.ConstantPool;
 import org.momento.lycoris.mixins.mixin.classe.structures.constants.ConstantInfo;
 import org.momento.lycoris.mixins.mixin.classe.structures.constants.UTF8Info;
-import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.Code;
-import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.ConstantValue;
-import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.SizedByteCodec;
-import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.StackMapTable;
+import org.momento.lycoris.mixins.mixin.classe.structures.infos.attributes.*;
 
 import java.nio.ByteBuffer;
 
@@ -27,22 +24,20 @@ public class AttributeInfo implements ByteCodec {
         if (info == null || info.getTag() != ConstantPool.Tag.UTF8)
             throw new RuntimeException();
         String attributeName =  ((UTF8Info) info).getString();
-        buffer.position(buffer.position() + 4);
+        int length = buffer.getInt();
         SizedByteCodec attribute = switch (attributeName) {
             case "ConstantValue" -> ConstantValue.decode(buffer);
             case "Code" -> Code.decode(constantPools, buffer);
             case "StackMapTable" -> StackMapTable.decode(buffer);
-            case "LineNumberTable" -> null;
-            case "LocalVariableTable" -> null;
-            case "SourceFile" -> null;
-            case "Deprecated" -> null;
-            case "Synthetic" -> null;
-            case "Exceptions" -> null;
-            case "InnerClasses" -> null;
-            case "EnclosingMethod" -> null;
-            case "Signature" -> null;
-            case "BoostrapMethods" -> null;
-            default -> throw new IllegalStateException("Unexpected value: " + attributeName);
+            case "Exceptions" -> Exceptions.decode(buffer);
+            case "InnerClasses" -> InnerClasses.decode(buffer);
+            case "EnclosingMethod" -> EnclosingMethod.decode(buffer);
+            case "Signature" -> Signature.decode(buffer);
+            case "SourceFile" -> SourceFile.decode(buffer);
+            case "SourceDebugExtension" -> SourceDebugExtension.decode(length, buffer);
+            case "LineNumberTable" -> LineNumberTable.decode(buffer);
+            case "LocalVariableTable", "LocalVariableTypeTable" -> LocalVariableTable.decode(buffer);
+            default -> null;
         };
         return new AttributeInfo(nameIndex, attribute);
     }

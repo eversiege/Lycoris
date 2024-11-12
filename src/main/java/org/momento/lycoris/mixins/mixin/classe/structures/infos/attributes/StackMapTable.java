@@ -35,7 +35,7 @@ public class StackMapTable implements SizedByteCodec {
                 case CHOP -> ChopFrame.decode(type, buffer);
                 case SAME_FRAME_EXTENDED -> SameExFrame.decode(type, buffer);
                 case APPEND -> AppendFrame.decode(type, buffer);
-                case FULL_FRAME -> null;
+                case FULL_FRAME -> FullFrame.decode(type, buffer);
             };
         }
         return new StackMapTable(entries);
