@@ -37,6 +37,10 @@ public class AttributeInfo implements ByteCodec {
             case "SourceDebugExtension" -> SourceDebugExtension.decode(length, buffer);
             case "LineNumberTable" -> LineNumberTable.decode(buffer);
             case "LocalVariableTable", "LocalVariableTypeTable" -> LocalVariableTable.decode(buffer);
+            case "RuntimeInvisibleAnnotations", "RuntimeVisibleAnnotations" -> RuntimeAnnotations.decode(buffer);
+            case "RuntimeInvisibleParameterAnnotations", "RuntimeVisibleParameterAnnotations" -> RuntimeParameterAnnotations.decode(buffer);
+            case "AnnotationDefault" -> AnnotationDefault.decode(buffer);
+            case "BootstrapMethods" -> BootstrapMethods.decode(buffer);
             default -> null;
         };
         return new AttributeInfo(nameIndex, attribute);

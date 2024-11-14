@@ -16,7 +16,7 @@ public class ArrayValue extends ElementValue {
     public static ArrayValue decode(final Tag tag, ByteBuffer buffer) {
         ElementValue[] elements = new ElementValue[buffer.getChar()];
         for (int i = 0; i < elements.length; i++)
-            elements[i] = null; //TODO MODIFY THIS
+            elements[i] = ElementValue.decode(buffer);
         return new ArrayValue(tag, elements);
     }
 

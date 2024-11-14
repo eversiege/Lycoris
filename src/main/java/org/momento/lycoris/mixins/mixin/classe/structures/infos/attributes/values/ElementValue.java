@@ -46,6 +46,18 @@ public abstract class ElementValue implements SizedByteCodec {
 
     public Tag getTag() { return tag; }
 
+    public static ElementValue decode(ByteBuffer buffer) {
+        ElementValue.Tag tag = ElementValue.Tag.fromValue(buffer.get());
+        assert tag != null;
+        return switch (tag) {
+            case BYTE, CHAR, DOUBLE, FLOAT, INT, LONG, SHORT, BOOLEAN, STRING -> ConstValue.decode(tag, buffer);
+            case ENUMCONSTANT -> EnumConstValue.decode(tag, buffer);
+            case CLASS -> ClassConstValue.decode(tag, buffer);
+            case ANNOTATION -> AnnotationValue.decode(tag, buffer);
+            case ARRAY -> ArrayValue.decode(tag, buffer);
+        };
+    }
+
     @Override
     public int getSize() {
         return 1;
