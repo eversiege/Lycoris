@@ -1,6 +1,6 @@
 package org.momento.lycoris.mixins;
 
-public class Boostrapper {
+public class Bootstrapper {
 
 
 
