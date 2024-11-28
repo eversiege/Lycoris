@@ -20,9 +20,9 @@ public class AttributeInfo implements ByteCodec {
 
     public static AttributeInfo decode(final ConstantPool[] constantPools, ByteBuffer buffer) {
         char nameIndex = buffer.getChar();
-        ConstantInfo info = constantPools[nameIndex].getInfo();
+        ConstantInfo info = constantPools[nameIndex - 1].getInfo();
         if (info == null || info.getTag() != ConstantPool.Tag.UTF8)
-            throw new RuntimeException();
+            throw new RuntimeException("Unexpected tag: " + info.getTag());
         String attributeName =  ((UTF8Info) info).getString();
         int length = buffer.getInt();
         SizedByteCodec attribute = switch (attributeName) {
@@ -46,7 +46,7 @@ public class AttributeInfo implements ByteCodec {
         return new AttributeInfo(nameIndex, attribute);
     }
 
-    public int getSize() { return 6 + attribute.getSize(); }
+    public int getSize() { return attribute.getSize(); }
 
     @Override
     public void encode(ByteBuffer buffer) {

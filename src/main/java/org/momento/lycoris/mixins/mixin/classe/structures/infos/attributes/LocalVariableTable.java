@@ -35,8 +35,7 @@ public class LocalVariableTable implements SizedByteCodec {
     public Table[] getTable() { return table; }
 
     public static LocalVariableTable decode(ByteBuffer buffer) {
-        char length = buffer.getChar();
-        Table[] table = new Table[(int)length];
+        Table[] table = new Table[buffer.getChar()];
         for (int i = 0; i < table.length; i++)
             table[i] = Table.decode(buffer);
         return new LocalVariableTable(table);

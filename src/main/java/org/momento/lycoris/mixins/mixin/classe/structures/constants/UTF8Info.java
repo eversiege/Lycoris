@@ -17,8 +17,7 @@ public class UTF8Info extends ConstantInfo {
     public String getString() { return string; }
 
     public static UTF8Info decode(ByteBuffer buffer) {
-        char length = buffer.getChar();
-        byte[] bytes = new byte[length];
+        byte[] bytes = new byte[buffer.getChar()];
         buffer.get(bytes);
         String string = new String(bytes, StandardCharsets.UTF_8);
         return new UTF8Info(ConstantPool.Tag.UTF8, string);

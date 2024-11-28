@@ -12,7 +12,7 @@ public class ConstantPool implements ByteCodec {
         Class((byte) 7),
         FieldRef((byte) 9),
         MethodRef((byte) 10),
-        InterfaceMethodRef((byte) 1),
+        InterfaceMethodRef((byte) 11),
         String((byte) 8),
         Integer((byte) 3),
         Float((byte) 4),
@@ -39,7 +39,7 @@ public class ConstantPool implements ByteCodec {
                 if (tag.value == value)
                     return tag;
             }
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Unknown tag: " + value);
         }
 
     }

@@ -25,8 +25,6 @@ public final class Lycoris extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        ClassPool
-        ClassDefinition definition = new ClassDefinition()
     }
 
     @Override

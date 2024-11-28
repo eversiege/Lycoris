@@ -4,43 +4,14 @@ import java.nio.ByteBuffer;
 
 public class InnerClasses implements SizedByteCodec {
 
-    public enum Flag {
-        PUBLIC((char) 0x1),
-        PRIVATE((char) 0x2),
-        PROTECTED((char) 0x4),
-        STATIC((char) 0x8),
-        FINAL((char) 0x10),
-        INTERFACE((char) 0x200),
-        ABSTRACT((char) 0x400),
-        SYNTHETIC((char) 0x1000),
-        ANNOTATION((char) 0x2000),
-        ENUM((char) 0x4000);
-
-        private final char value;
-
-        Flag(final char value) {
-            this.value = value;
-        }
-
-        public char getValue() { return value; }
-
-        public static Flag fromValue(final char value) {
-            for (final Flag flag : Flag.values()) {
-                if (flag.getValue() == value)
-                    return flag;
-            }
-            return null;
-        }
-    }
-
     public static class Classes implements SizedByteCodec {
 
         final char innerClassInfoIndex;
         final char outerClassInfoIndex;
         final char innerNameIndex;
-        final Flag innerClassAccessFlags;
+        final AccessFlag innerClassAccessFlags;
 
-        public Classes(final char innerClassInfoIndex, final char outerClassInfoIndex, final char innerNameIndex, final Flag innerClassAccessFlags) {
+        public Classes(final char innerClassInfoIndex, final char outerClassInfoIndex, final char innerNameIndex, final AccessFlag innerClassAccessFlags) {
             this.innerClassInfoIndex = innerClassInfoIndex;
             this.outerClassInfoIndex = outerClassInfoIndex;
             this.innerNameIndex = innerNameIndex;
@@ -48,7 +19,7 @@ public class InnerClasses implements SizedByteCodec {
         }
 
         public static Classes decode(ByteBuffer buffer) {
-            return new Classes(buffer.getChar(), buffer.getChar(), buffer.getChar(), Flag.fromValue(buffer.getChar()));
+            return new Classes(buffer.getChar(), buffer.getChar(), buffer.getChar(), AccessFlag.fromValue(buffer.getChar()));
         }
 
 

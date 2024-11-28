@@ -32,7 +32,7 @@ public class LineNumberTable implements SizedByteCodec {
 
     public static LineNumberTable decode(ByteBuffer buffer) {
         char length = buffer.getChar();
-        Table[] table = new Table[(int)length];
+        Table[] table = new Table[length];
         for (int i = 0; i < table.length; i++)
             table[i] = Table.decode(buffer);
         return new LineNumberTable(table);

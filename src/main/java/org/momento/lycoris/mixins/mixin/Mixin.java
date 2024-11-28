@@ -8,8 +8,4 @@ public class Mixin<T> {
         this.classe = classe;
     }
 
-    public byte[] getBytecode() {
-        Cl
-    }
-
 }
