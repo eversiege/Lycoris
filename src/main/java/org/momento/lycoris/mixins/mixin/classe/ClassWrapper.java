@@ -29,6 +29,7 @@ public class ClassWrapper implements ByteCodec {
 
         private char value;
 
+        // set up flags reading and their properties
         AccessFlag(char value) {
             this.value = value;
         }
@@ -36,7 +37,7 @@ public class ClassWrapper implements ByteCodec {
         public char getValue() { return value; }
         public char setValue(char value) { this.value = value; return value; }
 
-
+        // map values
         public static AccessFlag fromValue(final char value) {
             for (final AccessFlag flag : AccessFlag.values()) {
                 if (flag.getValue() == value)
@@ -65,6 +66,7 @@ public class ClassWrapper implements ByteCodec {
         }
     }
 
+    // setup decoding attributes to class
     private final int magic;
     private final char minorVersion;
     private final char majorVersion;
@@ -106,16 +108,22 @@ public class ClassWrapper implements ByteCodec {
     public MethodInfo[] getMethods() { return methods; }
     public AttributeInfo[] getAttributes() { return attributes; }
 
+
+    // reading class info header
     public static ClassWrapper decode(ByteBuffer buffer) {
         int magic = buffer.getInt();
         char minorVersion = buffer.getChar();
         char majorVersion = buffer.getChar();
+        
+        // start decoding info
         ConstantPool[] constantPool = new ConstantPool[buffer.getChar() - 1];
         for (int i = 0; i < constantPool.length; ++i)
             constantPool[i] = ConstantPool.decode(buffer);
+            
         AccessFlag flag = AccessFlag.fromValue(buffer.getChar());
         char thisClass = buffer.getChar();
         char superClass = buffer.getChar();
+        
         char[] interfaces = new char[buffer.getChar()];
         for (int i = 0; i < interfaces.length; ++i)
             interfaces[i] = buffer.getChar();
@@ -128,15 +136,17 @@ public class ClassWrapper implements ByteCodec {
         AttributeInfo[] attributes = new AttributeInfo[buffer.getChar()];
         for (int i = 0; i < attributes.length; ++i)
             attributes[i] = AttributeInfo.decode(constantPool, buffer);
-        return new ClassWrapper(magic, minorVersion, majorVersion, constantPool, flag, thisClass, superClass, interfaces, fields, methods, attributes);
+        
+            return new ClassWrapper(magic, minorVersion, majorVersion, constantPool, flag, thisClass, superClass, interfaces, fields, methods, attributes);
     }
-
+    // error edge case
     public static ClassWrapper decode(Path path) throws IOException {
         byte[] bytes = Files.readAllBytes(path);
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
         return decode(buffer);
     }
 
+    // create and encode to bytebuffer
     @Override
     public void encode(ByteBuffer buffer) {
         buffer.putInt(magic);
