@@ -26,7 +26,7 @@ public class StackMapTable implements SizedByteCodec {
     public static StackMapTable decode(ByteBuffer buffer) {
         StackMapFrame[] entries = new StackMapFrame[buffer.getChar()];
         for (int i = 0; i < entries.length; ++i) {
-            byte frameType = buffer.get();
+            char frameType = (char) (buffer.get() & 0xFF);
             StackMapFrame.Type type = StackMapFrame.Type.fromValue(frameType);
             entries[i] = switch (type) {
                 case SAME -> new SameFrame(type);

@@ -41,6 +41,7 @@ public class AttributeInfo implements ByteCodec {
             case "RuntimeInvisibleParameterAnnotations", "RuntimeVisibleParameterAnnotations" -> RuntimeParameterAnnotations.decode(buffer);
             case "AnnotationDefault" -> AnnotationDefault.decode(buffer);
             case "BootstrapMethods" -> BootstrapMethods.decode(buffer);
+            case "NestMembers" -> NestMembers.decode(buffer);
             default -> null;
         };
         return new AttributeInfo(nameIndex, attribute);

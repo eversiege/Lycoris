@@ -122,10 +122,9 @@ public class ClassWrapper implements ByteCodec {
         FieldInfo[] fields = new FieldInfo[buffer.getChar()];
         for (int i = 0; i < fields.length; ++i)
             fields[i] = FieldInfo.decode(constantPool, buffer);
-       MethodInfo[] methods = new MethodInfo[buffer.getChar()];
-        for (int i = 0; i < methods.length; ++i) {
+        MethodInfo[] methods = new MethodInfo[buffer.getChar()];
+        for (int i = 0; i < methods.length; ++i)
             methods[i] = MethodInfo.decode(constantPool, buffer);
-        }
         AttributeInfo[] attributes = new AttributeInfo[buffer.getChar()];
         for (int i = 0; i < attributes.length; ++i)
             attributes[i] = AttributeInfo.decode(constantPool, buffer);

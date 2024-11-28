@@ -7,23 +7,23 @@ import java.nio.ByteBuffer;
 public abstract class StackMapFrame implements SizedByteCodec {
 
     public enum Type {
-        SAME((byte) 0),
-        SAME_LOCAL_1_STACk_ITEM((byte) 64),
-        SAME_LOCAL_1_STACK_ITEM_EXTENDED((byte) 247),
-        CHOP((byte) 248),
-        SAME_FRAME_EXTENDED((byte) 251),
-        APPEND((byte) 252),
-        FULL_FRAME((byte) 255);
+        SAME((char) 0),
+        SAME_LOCAL_1_STACk_ITEM((char) 64),
+        SAME_LOCAL_1_STACK_ITEM_EXTENDED((char) 247),
+        CHOP((char) 248),
+        SAME_FRAME_EXTENDED((char) 251),
+        APPEND((char) 252),
+        FULL_FRAME((char) 255);
 
-        private byte value;
+        private char value;
 
-        Type(final byte value) {
+        Type(final char value) {
             this.value = value;
         }
 
-        public byte getValue() { return value; }
+        public char getValue() { return value; }
 
-        public static Type fromValue(final byte value) {
+        public static Type fromValue(final char value) {
             Type type;
             if (value < 64)
                 type = SAME;
@@ -59,6 +59,6 @@ public abstract class StackMapFrame implements SizedByteCodec {
 
     @Override
     public void encode(ByteBuffer buffer) {
-        buffer.put(type.value);
+        buffer.put((byte) type.value);
     }
 }

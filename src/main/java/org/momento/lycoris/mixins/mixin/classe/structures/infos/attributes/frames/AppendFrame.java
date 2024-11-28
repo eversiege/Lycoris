@@ -18,7 +18,7 @@ public class AppendFrame extends StackMapFrame {
 
     public static AppendFrame decode(final Type type, ByteBuffer buffer) {
         char offsetDelta = buffer.getChar();
-        VerificationTypeInfo[] locals = new VerificationTypeInfo[type.getValue()];
+        VerificationTypeInfo[] locals = new VerificationTypeInfo[type.getValue() - 251];
         for (int i = 0; i < locals.length; ++i)
             locals[i] = VerificationTypeInfo.decode(buffer);
         return new AppendFrame(type, offsetDelta, locals);
